@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %} 
+{% block head_title %}Viewing category {{ category.title }}{% endblock %}
+{% block title %}{{ category.title }}{% endblock %}
+
+{% block content %}
+	<h2>Categories</h2>
+    {% if posts %}
+        <ul>
+        {% for post in posts %}
+            <h1><a href="{% url 'blog:view_post' slug=post.slug %}">{{post.title}}</a></h1>
+          
+        {% endfor %}
+        </ul>
+    {% else %}
+        <li>There are no posts.</li>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block head_title %}My first blog{% endblock %}</title>
+    </head>
+    <body>
+        <h1>{% block title %}Hello, welcome to my first blog.</h1>
+	<li> Use some other url pattern to go to some other blog page.
+	Thank you :-){% endblock %}</li>
+        {% block content %}
+
+        {% endblock %}
+    </body>
+</html>

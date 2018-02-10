@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <!--<h1>New post</h1>-->
+    {% if post.date %}
+            <div class="date">
+                {{ post.published_date }}
+            </div>
+    
+    {% endif %}
+    <form method="POST" class="post-form">
+    {% csrf_token %}
+     <!--   Title :
+		<input type = "text"> <br><br>
+		Enter Content: <br>
+		<textarea name="textarea" style="width:1200px;height:300px;"></textarea><br>
+		Slug:
+		<input type="text"><br>-->
+		{{ form.as_p }}
+        <button type="submit" class="save btn btn-default btn-lg">Save</button>
+    </form>
+{% endblock %}

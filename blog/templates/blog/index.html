@@ -1,0 +1,33 @@
+{% extends 'blog/base.html' %}
+{% block title %}My first Blog in django{% endblock %}
+
+
+{% block content %}
+    <h4>Hello {{username}}</h4>
+    <h2><a href="{% url 'blog:logout_page' %}">Logout</a></h2>
+    <h2>Categories</h2>
+    {% if categories %}
+        <ul>
+        {% for category in categories %}
+            <h1><a href="{% url 'blog:view_category' slug=category.slug %}" > {{category.title}} </a></h1>
+            
+        {% endfor %}
+        </ul>
+    {% else %}
+        <li>There are no posts.</li>
+    {% endif %}
+
+    <h2>Posts</h2>
+    <h2><a href="{%url 'blog:post_new' %}">Add a new Post</a></h2>
+    {% if posts %}
+        <ul>
+        {% for post in posts %}
+            <h1><a href="{% url 'blog:view_post' slug=post.slug %}">{{post.title}}</a></h1>
+          
+        {% endfor %}
+        </ul>
+    {% else %}
+        <li>There are no posts.</li>
+    {% endif %}
+
+{% endblock %}

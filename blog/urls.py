@@ -11,7 +11,9 @@ urlpatterns = [
 	#url(r'accounts/', include('registration.backends.hmac.urls')),
 	url(r'^post/(?P<slug>[-\w]+)$', views.post_edit, name='post_edit'),
 	url(r'logout/$', views.logout_page,name='logout_page'),
-	url(r'register/$',views.register_page,name='register_page')
+	url(r'register/$',views.register_page,name='register_page'),
+	url(r'search/$', views.search, name='search'),
+	url(r'^follow/(?P<pk>[0-9]+)', views.follow,name='follow'),
 	#url(r'login/$', views.login_page, name='login_page'),
 	]
 #[^\.]       ?????

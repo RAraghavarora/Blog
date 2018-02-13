@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block head_title %}Search {% endblock %}</title>
+    </head>
+    <body>
+        <h1>{% block title %}Search results:{% endblock %}</h1>
+        <ul>
+        {% for name in list_names %}
+            <form method='GET'>
+              <h1>{{name.user.username}} {{name.pk}}
+              <a href='{%url 'blog:follow' pk=name.pk %}' /> Follow</a>
+            </h1>
+            </form>
+
+        {% endfor %}
+        </ul>
+        {% block content %}
+
+        {% endblock %}
+    </body>
+</html>

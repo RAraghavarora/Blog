@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from .forms import PostForm,RegistrationForm
 #from django.shortcuts import render
 from django.views.generic.list import ListView
-from .models import Blog, Category
+from .models import Blog, Category,Profile
 from django.shortcuts import render, get_object_or_404,redirect
 from django.views.generic.detail import DetailView
 from django.utils import timezone
@@ -15,7 +15,15 @@ from django.contrib.auth.models import User
 
 
 def index(request):
-	print request.user.username
+	#print request.user.username
+	#a=list(Profile.objects.all())
+	#print a.username   --------------   WRONG!
+#	print a[0].user.username	----------- RIGHT!
+	if request.GET:
+		query=(request.GET.get("q"))
+		print query
+		request.session['query']=query
+		return redirect('blog:search')
 	context={'categories':Category.objects.all(),'posts':Blog.objects.all(), 'username':request.user.username}
 	return render(request,'blog/index.html', context)
 
@@ -48,6 +56,7 @@ def post_new(request):
 	return render(request, 'blog/post_edit.html',context)
 
 def post_edit(request,slug):
+	#print slug
 	post = get_object_or_404(Blog, slug=slug)
 	if request.method == 'POST':
 		form = PostForm(request.POST, instance=post)
@@ -79,3 +88,32 @@ def register_page(request):
 			return HttpResponseRedirect('/blog')
 	form=RegistrationForm()
 	return render(request, 'registration/register.html', {'form':form})
+
+def search(request):
+	qlist=(Profile.objects.all())
+	query=request.session['query']
+	#print "qweoplksasdp;swiop"
+	#query=(request.GET.get("q"))
+	#print query
+	if query:
+		qlist = qlist.filter(user__username__icontains=query)
+	qlist=list(qlist)
+	list_names=[]
+	for i in qlist:
+		list_names.append(i)
+	if None:
+		print i.pk
+		print "Raghav"
+		return redirect('blog:follow',pk=i.pk)
+	context= {'list_names':list_names}
+	return render(request, 'blog/search.html', context)
+
+def follow(request,pk):
+	print pk
+	p=Profile.objects.get(pk=pk)
+	q= request.user
+	print q.username
+	print p.user.username
+	p.follows.add(q)
+
+	return render(request, 'blog/index.html')

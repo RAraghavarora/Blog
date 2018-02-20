@@ -14,6 +14,8 @@ urlpatterns = [
 	url(r'register/$',views.register_page,name='register_page'),
 	url(r'search/$', views.search, name='search'),
 	url(r'^follow/(?P<pk>[0-9]+)', views.follow,name='follow'),
+	url(r'^unfollow/(?P<pk>[0-9]+)',views.unfollow, name='unfollow'),
+	url(r'^login$', views.login, name='login'),
 	#url(r'login/$', views.login_page, name='login_page'),
 	]
 #[^\.]       ?????

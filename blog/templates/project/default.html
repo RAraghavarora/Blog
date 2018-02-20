@@ -7,6 +7,7 @@
         <h1>{% block title %}Hello, welcome to my first blog.</h1>
 	<li> Use some other url pattern to go to some other blog page.
 	Thank you :-){% endblock %}</li>
+  <a href="{% url 'blog:login' %}"> Login </a>
         {% block content %}
 
         {% endblock %}

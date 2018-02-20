@@ -8,7 +8,8 @@ from django.shortcuts import render, get_object_or_404,redirect
 from django.views.generic.detail import DetailView
 from django.utils import timezone
 from django.http import HttpResponseRedirect
-from django.contrib.auth import logout,login
+from django.contrib.auth import logout
+from django.contrib.auth import login as auth_login
 #from app.forms import *
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.models import User
@@ -24,7 +25,10 @@ def index(request):
 		print query
 		request.session['query']=query
 		return redirect('blog:search')
-	context={'categories':Category.objects.all(),'posts':Blog.objects.all(), 'username':request.user.username}
+
+	q=request.user
+	a=Profile.objects.get(user=q)
+	context={'categories':Category.objects.all(),'followers':list(a.follows.all()),'posts':Blog.objects.all(), 'username':request.user.username}
 	return render(request,'blog/index.html', context)
 
 def view_post(request, slug):
@@ -84,7 +88,7 @@ def register_page(request):
 		form = RegistrationForm(request.POST)
 		if form.is_valid():
 			user=User.objects.create_user(username=form.cleaned_data['username'], first_name=form.cleaned_data['first_name'],password=form.cleaned_data['password1'],email=form.cleaned_data['email'])
-			login(request,user)
+			auth_login(request,user)
 			return HttpResponseRedirect('/blog')
 	form=RegistrationForm()
 	return render(request, 'registration/register.html', {'form':form})
@@ -99,13 +103,18 @@ def search(request):
 		qlist = qlist.filter(user__username__icontains=query)
 	qlist=list(qlist)
 	list_names=[]
+	pro=request.user
+	a=0
 	for i in qlist:
 		list_names.append(i)
+		if pro in list( list_names[a].follows.all() ):
+			print list_names[a].user.username
+		a+=1
 	if None:
 		print i.pk
 		print "Raghav"
 		return redirect('blog:follow',pk=i.pk)
-	context= {'list_names':list_names}
+	context= {'list_names':list_names,'logged_in':pro}
 	return render(request, 'blog/search.html', context)
 
 def follow(request,pk):
@@ -116,4 +125,13 @@ def follow(request,pk):
 	print p.user.username
 	p.follows.add(q)
 
-	return render(request, 'blog/index.html')
+	return redirect('blog:index')
+
+def unfollow(request,pk):
+	p=Profile.objects.get(pk=pk)
+	q=request.user
+	p.follows.remove(q)
+	return redirect('blog:search')
+
+def login(request):
+	return redirect(auth_views.login)

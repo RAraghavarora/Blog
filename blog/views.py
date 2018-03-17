@@ -36,7 +36,7 @@ def index(request):
 	list_following=list(q.following.all())
 	l=len(list_following)
 
-	context={'l':l,'list':list_following,'categories':Category.objects.all(),'followers':list(a.follows.all()),'posts':Blog.objects.all(), 'username':request.user.username}
+	context={'l':l,'list':list_following,'categories':Category.objects.all(),'followers':list(a.followers.all()),'posts':Blog.objects.all(), 'username':request.user.username}
 	return render(request,'blog/index.html', context)
 
 def view_post(request, slug):
@@ -116,7 +116,7 @@ def search(request):
 	a=0
 	for i in qlist:
 		list_names.append(i)
-		if pro in list( list_names[a].follows.all() ):
+		if pro in list( list_names[a].followers.all() ):
 			print list_names[a].user.username
 		a+=1
 	if None:
@@ -132,14 +132,14 @@ def follow(request,pk):
 	q= request.user #logged_in user
 	print q.username
 	print p.user.username
-	p.follows.add(q)
+	p.followers.add(q)
 
 	return redirect('blog:index')
 
 def unfollow(request,pk):
 	p=Profile.objects.get(pk=pk)
 	q=request.user
-	p.follows.remove(q)
+	p.followers.remove(q)
 	return redirect('blog:search')
 
 def login(request):

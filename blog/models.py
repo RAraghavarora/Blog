@@ -18,7 +18,7 @@ class Blog(models.Model):
 	date = models.DateTimeField(auto_now_add=True)
 	update= models.DateTimeField(auto_now=True)
 
-#revisit on_delete . 
+#revisit on_delete .
 	#def __unicode__(self):
 	#	return self.title
 
@@ -55,7 +55,7 @@ class Category(models.Model):
 class Profile(models.Model):
 	user=models.OneToOneField(User,on_delete=models.CASCADE)
 	birth_date=models.DateField(null=True, blank=True)
-	follows=models.ManyToManyField(User,related_name='following',symmetrical=False)#list of followers
+	followers=models.ManyToManyField(User,related_name='following',symmetrical=False)#list of followers
 
 
 @receiver(post_save, sender=User)

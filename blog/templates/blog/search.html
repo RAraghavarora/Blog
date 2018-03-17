@@ -10,7 +10,7 @@
         {% for name in list_names %}
             <form method='GET'>
               <h1>{{name.user.username}} {{name.pk}}
-                {% if logged_in in name.follows.all %}
+                {% if logged_in in name.followers.all %}
                   <a href='{%url 'blog:unfollow' pk=name.pk %}' /> Unfollow</a>
                 {% else %}
                   <a href='{%url 'blog:follow' pk=name.pk %}' /> Follow</a>

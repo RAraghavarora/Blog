@@ -21,6 +21,16 @@
     {% else %}
       NONE
     {% endif %}
+    <h1> Following </h1>
+    {% if list %}
+      <ul>
+        {% for i in list %}
+        <li> {{i.user.username}} </br> </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      None
+    {% endif %}
 
     <h2>Categories</h2>
     {% if categories %}

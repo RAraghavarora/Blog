@@ -1,8 +1,9 @@
-{% extends 'blog/base.html' %} 
+{% extends 'blog/base.html' %}
 {% block head_title %}{{ post.title }}{% endblock %}
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
     {{ post.body }}
+    {{ post.img }}
     <a class="btn btn-default" href="{% url 'blog:post_edit' slug=post.slug %}"><br> EDIT</a>
 {% endblock %}

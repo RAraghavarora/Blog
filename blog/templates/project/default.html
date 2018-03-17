@@ -8,6 +8,8 @@
 	<li> Use some other url pattern to go to some other blog page.
 	Thank you :-){% endblock %}</li>
   <a href="{% url 'blog:login' %}"> Login </a>
+  <br>
+  <a href="{%url 'blog:register_page' %}"> Register a new account </a>
         {% block content %}
 
         {% endblock %}

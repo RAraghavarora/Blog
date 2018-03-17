@@ -9,7 +9,7 @@ class PostForm(ModelForm):
 
     class Meta:
         model = Blog
-        fields = ['title','body','category']
+        fields = ['title','body','category','img']
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(label='Username', max_length=30)
@@ -41,5 +41,3 @@ class RegistrationForm(forms.Form):
             return username
         #raise forms.ValidationError('Username is already taken.')
         raise forms.ValidationError(('Username is already taken'), code='invalid')
-
-		

@@ -12,11 +12,13 @@ class Blog(models.Model):
 	title = models.CharField(max_length = 100, unique=True)
 	slug = models.SlugField(max_length=100,unique = True)
 	body = models.TextField()
+	img=models.ImageField(default='a.jpg')
 	posted =models.DateField(db_index = True, auto_now_add=True)
 	category=models.ForeignKey('blog.Category', on_delete=models.CASCADE,default='1')
 	date = models.DateTimeField(auto_now_add=True)
 	update= models.DateTimeField(auto_now=True)
 
+#revisit on_delete . 
 	#def __unicode__(self):
 	#	return self.title
 
@@ -53,7 +55,7 @@ class Category(models.Model):
 class Profile(models.Model):
 	user=models.OneToOneField(User,on_delete=models.CASCADE)
 	birth_date=models.DateField(null=True, blank=True)
-	follows=models.ManyToManyField(User,related_name='follower',symmetrical=False)
+	follows=models.ManyToManyField(User,related_name='following',symmetrical=False)#list of followers
 
 
 @receiver(post_save, sender=User)

@@ -5,6 +5,7 @@
     </head>
     <body>
         <h1>{% block title %}Search results:{% endblock %}</h1>
+        <a href ='{%url 'blog:index' %}' /> Homepage</a>
         <ul>
         {% for name in list_names %}
             <form method='GET'>

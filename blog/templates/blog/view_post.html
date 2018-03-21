@@ -1,9 +1,12 @@
 {% extends 'blog/base.html' %}
 {% block head_title %}{{ post.title }}{% endblock %}
 {% block title %}{{ post.title }}{% endblock %}
+{% block static %} {% load static %} {% endblock %}
 
 {% block content %}
     {{ post.body }}
-    {{ post.img }}
+  <h4>Author:</h4>  <p>{{post.author.user.username}}</p>
+  <img src={{image.url}} alt="Profile picture" >
     <a class="btn btn-default" href="{% url 'blog:post_edit' slug=post.slug %}"><br> EDIT</a>
+    <br><br><a href='{% url 'blog:index' %}' /> Homepage </a>
 {% endblock %}

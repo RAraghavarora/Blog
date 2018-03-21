@@ -7,32 +7,8 @@ from django.utils.text import slugify
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from PIL import Image
 # Create your models here.
-class Blog(models.Model):
-	title = models.CharField(max_length = 100, unique=True)
-	slug = models.SlugField(max_length=100,unique = True)
-	body = models.TextField()
-	img=models.ImageField(default='a.jpg')
-	posted =models.DateField(db_index = True, auto_now_add=True)
-	category=models.ForeignKey('blog.Category', on_delete=models.CASCADE,default='1')
-	date = models.DateTimeField(auto_now_add=True)
-	update= models.DateTimeField(auto_now=True)
-
-#revisit on_delete .
-	#def __unicode__(self):
-	#	return self.title
-
-	def save(self, *args, **kwargs):
-		self.slug=slugify(self.title)
-		super(Blog, self).save(*args, **kwargs)
-
-	def __str__(self):
-		return self.title
-
-	#@permalink
-	#def get_absolute_url(self):
-	#	return ('view_blog_post', None, {'slug':self.slug})
-
 
 class Category(models.Model):
 	title =models.CharField(max_length=100, db_index=True)
@@ -58,6 +34,7 @@ class Profile(models.Model):
 	followers=models.ManyToManyField(User,related_name='following',symmetrical=False)#list of followers
 
 
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
 	if created :
@@ -66,3 +43,30 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
 	instance.profile.save()
+
+
+class Blog(models.Model):
+	title = models.CharField(max_length = 100, unique=True)
+	slug = models.SlugField(max_length=100,unique = True)
+	body = models.TextField()
+	img=models.ImageField(upload_to='blog/blog/static/',null=True,help_text='Upload an image')
+	posted =models.DateField(db_index = True, auto_now_add=True)
+	category=models.ForeignKey('blog.Category', on_delete=models.CASCADE,default='1')
+	date = models.DateTimeField(auto_now_add=True)
+	update= models.DateTimeField(auto_now=True)
+	author=models.ForeignKey(Profile,related_name='article',on_delete=models.CASCADE,default=1)
+
+#revisit on_delete .
+	#def __unicode__(self):
+	#	return self.title
+
+	def save(self, *args, **kwargs):
+		self.slug=slugify(self.title)
+		super(Blog, self).save(*args, **kwargs)
+
+	def __str__(self):
+		return self.title
+
+	#@permalink
+	#def get_absolute_url(self):
+	#	return ('view_blog_post', None, {'slug':self.slug})

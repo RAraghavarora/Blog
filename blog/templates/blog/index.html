@@ -49,8 +49,9 @@
     {% if posts %}
         <ul>
         {% for post in posts %}
+            {% if post.author == user_profile %}
             <h1><a href="{% url 'blog:view_post' slug=post.slug %}">{{post.title}}</a></h1>
-
+            {% endif %}
         {% endfor %}
         </ul>
     {% else %}

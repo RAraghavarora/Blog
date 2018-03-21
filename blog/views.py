@@ -8,14 +8,18 @@ from django.shortcuts import render, get_object_or_404,redirect
 from django.views.generic.detail import DetailView
 from django.utils import timezone
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout,authenticate, login as auth_login, views as auth_views
 #from django.contrib.auth import login as auth_login
 #from app.forms import *
 #from django.contrib.auth import views as auth_views
 from django.contrib.auth.models import User
 from django.db.models import Q
-
+from PIL import Image
+import os
 #Django.contrib.auth  ---------  authenticate() to authenticate if the specific user is logged in
+
+@login_required
 def index(request):
 	#print request.user.username
 	#a=list(Profile.objects.all())
@@ -31,14 +35,15 @@ def index(request):
 	q=request.user
 	#tr=authenticate(username='raghav',password='bitspilani')
 	a=Profile.objects.get(user=q)
-
+	#u=authenticate()
 
 	list_following=list(q.following.all())
 	l=len(list_following)
 
-	context={'l':l,'list':list_following,'categories':Category.objects.all(),'followers':list(a.followers.all()),'posts':Blog.objects.all(), 'username':request.user.username}
+	context={'l':l,'list':list_following,'categories':Category.objects.all(),'followers':list(a.followers.all()),'posts':Blog.objects.all(), 'username':request.user.username,'user_profile':a}
 	return render(request,'blog/index.html', context)
 
+@login_required
 def view_post(request, slug):
 	context = {'post':get_object_or_404(Blog, slug=slug)}
 
@@ -50,16 +55,28 @@ def view_category(request, slug):
 	context = {'category':category, 'posts':Blog.objects.filter(category = category)}
 	return render(request,'blog/view_category.html', context)
 
+@login_required
 def post_new(request):
 
 	if request.method=='POST':
-		form =PostForm(request.POST)
+		form =PostForm(request.POST,request.FILES)
+		print "IS_VALID"
 		if form.is_valid():
 			blog=form.save(commit=False)
+			blog.author=Profile.objects.get(user=request.user)
+			im=Image.open(blog.img)
+			print type(blog.img)
+			'''fn , fext = os.path.splitext(im)
+			im2= im.convert('RGB')
+			im2.save('demo.jpg')'''
 			blog.save()
-			context = {'post':get_object_or_404(Blog, slug=blog.slug)}
+			print im.filename
+			#print fn + '\n' + fext
+			context = {'post':get_object_or_404(Blog, slug=blog.slug),'image':blog.img }
 
 			return render(request,'blog/view_post.html',context)
+		else:
+			print "ajflajflij"
 
 	else:
 		form = PostForm()

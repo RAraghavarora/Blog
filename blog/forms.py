@@ -9,7 +9,7 @@ class PostForm(ModelForm):
 
     class Meta:
         model = Blog
-        fields = ['title','body','category','img']
+        fields = ['title','body','category']
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(label='Username', max_length=30)

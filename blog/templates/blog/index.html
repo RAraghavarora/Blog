@@ -32,18 +32,7 @@
       None
     {% endif %}
 
-    <h2>Categories</h2>
-    {% if categories %}
-        <ul>
-        {% for category in categories %}
-            <h1><a href="{% url 'blog:view_category' slug=category.slug %}" > {{category.title}} </a></h1>
-
-        {% endfor %}
-        </ul>
-    {% else %}
-        <li>There are no posts.</li>
-    {% endif %}
-
+    
     <h2>Posts</h2>
     <h2><a href="{%url 'blog:post_new' %}">Add a new Post</a></h2>
     {% if posts %}

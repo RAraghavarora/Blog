@@ -27,7 +27,7 @@ def index(request):
 #	print a[0].user.username	----------- RIGHT!
 	if request.GET:
 		query=(request.GET.get("q"))
-		print query
+		#print query
 		request.session['query']=query
 		return redirect('blog:search')
 
@@ -60,24 +60,22 @@ def post_new(request):
 
 	if request.method=='POST':
 		form =PostForm(request.POST,request.FILES)
-		print "IS_VALID"
+		#print "IS_VALID"
 		if form.is_valid():
 			blog=form.save(commit=False)
 			blog.author=Profile.objects.get(user=request.user)
 			im=Image.open(blog.img)
-			print type(blog.img)
+			#print type(blog.img)
 			'''fn , fext = os.path.splitext(im)
 			im2= im.convert('RGB')
 			im2.save('demo.jpg')'''
 			blog.save()
-			print im.filename
+			#print im.filename
 			#print fn + '\n' + fext
 			context = {'post':get_object_or_404(Blog, slug=blog.slug),'image':blog.img }
 
 			return render(request,'blog/view_post.html',context)
-		else:
-			print "ajflajflij"
-
+		
 	else:
 		form = PostForm()
 
@@ -90,7 +88,7 @@ def post_edit(request,slug):
 	if request.method == 'POST':
 		form = PostForm(request.POST, instance=post)
 		if form.is_valid():
-			print "YES"
+			#print "YES"
 			post = form.save(commit=False)
 			post.date=timezone.now()
 			post.save()
@@ -133,22 +131,21 @@ def search(request):
 	a=0
 	for i in qlist:
 		list_names.append(i)
-		if pro in list( list_names[a].followers.all() ):
-			print list_names[a].user.username
+		
 		a+=1
 	if None:
-		print i.pk
-		print "Raghav"
+		#print i.pk
+		#print "Raghav"
 		return redirect('blog:follow',pk=i.pk)
 	context= {'list_names':list_names,'logged_in':pro}
 	return render(request, 'blog/search.html', context)
 
 def follow(request,pk):
-	print pk
+	#print pk
 	p=Profile.objects.get(pk=pk) #user we searched
 	q= request.user #logged_in user
-	print q.username
-	print p.user.username
+	#print q.username
+	#print p.user.username
 	p.followers.add(q)
 
 	return redirect('blog:index')

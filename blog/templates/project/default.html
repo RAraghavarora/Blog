@@ -1,17 +1,127 @@
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>{% block head_title %}My first blog{% endblock %}</title>
-    </head>
-    <body>
-        <h1>{% block title %}Hello, welcome to my first blog.</h1>
-	<li> Use some other url pattern to go to some other blog page.
-	Thank you :-){% endblock %}</li>
-  <a href="{% url 'blog:login' %}"> Login </a>
-  <br>
-  <a href="{%url 'blog:register_page' %}"> Register a new account </a>
-        {% block content %}
+<head>
+	{% load staticfiles %}
+<title>Welcome :)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Raghav Arora Break Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script type="{% static 'application/x-javascript' %}"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<link href="{% static 'css/bootstrap.css' %}" rel='stylesheet' type='text/css' />
+<link href="{% static 'css/style.css' %}" rel='stylesheet' type='text/css' />
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<!---- start-smoth-scrolling---->
+<script type="text/javascript" src="{% static 'js/move-top.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/easing.js' %}"></script>
+<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+				});
+			});
+		</script>
+<!--start-smoth-scrolling-->
+	<!--script-->
+	<script src="{% static 'js/modernizr.custom.97074.js' %}"></script>
+<script src="{% static 'js/jquery.chocolat.js' %}"></script>
+		<link rel="stylesheet" href="{% static 'css/chocolat.css' %}" type="text/css" media="screen" charset="utf-8">
+		<!--light-box-files -->
+		<script type="text/javascript" charset="utf-8">
+		$(function() {
+			$('.gallery a').Chocolat();
+		});
+		</script>
+		<script type="text/javascript" src="{% static 'js/jquery.hoverdir.js' %}"></script>
+</head>
+<body>
+	<!--header-top-starts-->
+	<div class="header-top">
+		<div class="container">
+			<div class="head-main">
+				<a ><img src="{% static 'images/logo-1.png' %}" alt="" /></a>
+			</div>
+		</div>
+	</div>
+	<!--header-top-end-->
+	<!--start-header-->
+	<div class="header">
+		<div class="container">
+			<div class="head">
+			<div class="navigation">
+				 <span class="menu"></span>
+					<ul class="navig">
+						<li><a href="{% url 'blog:login' %}">Login</a></li>
+						<li><a href="{%url 'blog:register_page' %}">Create a new account</a></li>
+						
+					</ul>
+			</div>
+			<div class="header-right">
+				<div class="search-bar">
+					<input type="text" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
+					<input type="submit" value="">
+				</div>
+				<ul>
+					<li><a href="#"><span class="fb"> </span></a></li>
+					<li><a href="#"><span class="twit"> </span></a></li>
+					<li><a href="#"><span class="pin"> </span></a></li>
+					<li><a href="#"><span class="rss"> </span></a></li>
+					<li><a href="#"><span class="drbl"> </span></a></li>
+				</ul>
+			</div>
+				<div class="clearfix"></div>
+			</div>
+			</div>
+		</div>
+	<!-- script-for-menu -->
+	<!-- script-for-menu -->
+		<script>
+			$("span.menu").click(function(){
+				$(" ul.navig").slideToggle("slow" , function(){
+				});
+			});
+		</script>
+	<!-- script-for-menu -->
+	<!--banner-starts-->
+	<div class="banner">
+		<div class="container">
+			<div class="banner-top">
+				<div class="banner-text">
+					<h2>Raghav Arora</h2>
+					<h1>Blog</h1>
 
-        {% endblock %}
-    </body>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--banner-end-->
+	<!--gallery-starts-->
+	<div class="gallery">
+		<div class="container">
+			<div class="gallery-top heading">
+				<h3>Welcome _/\_</h3>
+			</div>
+			
+		<script type="text/javascript">
+			$(function() {
+
+				$(' #da-thumbs > li ').each( function() { $(this).hoverdir(); } );
+
+			});
+		</script>
+        </div>
+	</div>
+	<!--gallery-end-->
+	<!--footer-starts-->
+	<div class="footer">
+		<div class="container">
+			<div class="footer-text">
+				<p>©  Raghav Arora Ji. All Rights Reserved  </p>
+			</div>
+		</div>
+	</div>
+	<!--footer-end-->
+</body>
 </html>
